@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% load static %}
+{% block body %}
+<!-- custom select style -->
+
+<!-- end -->
+<style>
+.button-container {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 11px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    background-color: #ccc;
+    color: #fff;
+    border-radius: 19px;
+    margin-right: 9px;
+}
+
+.btn-active img{
+    border-radius: 30%;
+    width: 70%;
+}
+    .scrollable-btns::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+  
+}
+
+.scrollable-btns::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 100px;
+}
+
+.scrollable-btns::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(60, 1, 22, 0.5);
+  border-radius: 100px;
+  background-color: black;
+}
+.btn-active{
+    background-color: violet;
+    text-align: center;
+    color: white;
+}
+
+#check-type-select option{
+  display: inline-block;
+}
+.button-range-slider{
+  display: none;
+}
+</style>
+
+
+<div class="modal" id="cities-modal" tabindex="-1" style="top:7vh;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Select City</h5>
+        <button type="button" onclick="closeCitiesModal();" class="btn-close" data-bs-dismiss="cities-modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You are now searching in <b><span class="dyn-city">Lucknow</span></b></p>
+        <div class="container-fluid">search
+          <div class="mb-3">
+            <input name="search" type="text" onfocus="initializeAutocompleteModal();" class="form-control modal-city-search" data-con="" id="modal-search" placeholder="Search City" aria-describedby="emailHelp">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" onclick="closeCitiesModal();" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section>
+  <div class="container">
+    <div class="modal-body">
+      <p>You are now searching in <b><span class="dyn-city">Lucknow</span></b></p>
+      <div class="container-fluid">
+        <div class="mb-3 row">
+          <input name="search" type="text" onfocus="initializeAutocompleteModal();" class="form-control modal-city-search lp-dyn-city" data-con="" id="modal-search" placeholder="Search City" aria-describedby="emailHelp" style="width: 80%;">
+          <button class="btn col-2" style="border: 1px solid rgba(0, 0, 0, 0.5);" onclick="LPclearSearchCity();"><i class="bi bi-x-circle col-2"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container button-container scrollable-btns" id="all_btn">
+
+    <button class="btn button" style="background-color: inherit;">
+      <div class="row">
+        <select class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
+          <option selected>Any BHK</option>
+          <option value="c-buy">1 Rk</option>
+          <option value="c-sell">1 BHK</option>
+          <option value="c-rent">2 BHK</option>
+          <option value="c-rent">3 BHK</option>
+          <option value="c-rent">3+ BHK</option>
+        </select>
+      </div>
+    </button>
+    <div class="dropdown" style="display: inline-block; background-color: inherit;position: inherit;">
+      <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Any Price
+      </a>
+    
+      <ul class="dropdown-menu">
+        <li>
+          <div class="container-fluid">
+            <input type="range" value="2500000" id="budgetSlider" min="100000" max="50000000" step="1" style="width: 50vw;">
+            <p id="budgetLabel">25L</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <button class="button" onclick="">Owner</button>
+    <button class="button" onclick="">Verified</button>
+    <button class="button" onclick="">With Images</button>
+    <!-- <a type="button" href="/service/{{active.name|cut:' '}}/{{active.uid}}" class="button btn-active">BHK</a> -->
+    {% for i in 'abcde' %}
+    <a type="button" href="/service/{{i.name|cut:' '}}/{{i.uid}}" class="button" onclick="">Price</a>
+    {% endfor %}
+
+</div>
+
+<style>
+  .lp-listing p{
+    padding: 0;
+    margin: 0;
+  }
+</style>
+
+<div class="container-fluid url-location">
+  <p style="color: #b2a3a3; font-size: 13px;margin-bottom: 0;">Home/Lucknow/Gomti Nagar.</p>
+  <!-- <br> -->
+  <p style="color: #b2a3a3; font-size: 13px;">Last Updated on 16 June.</p>
+  <h6>600 Flats for Rent in Gomti Nagar</h6>
+</div>
+
+<div class="container-fluid lp-listing">
+  <div class="items">
+    <div class="row">
+      <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
+      <div class="body col-7" style="padding-right: 0;">
+        <p class="price">Rs. 100000</p>
+        <p style="line-height: 1;font-size: 12px;" class="title mt-1">afnksafas asd sa dsa da sd sadas.</p>
+        <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">Gomti Nagar, Lucknow</p>
+        <span class="detail mt-1 row" style="justify-content: space-around;width: 100%;">
+          <p style="font-size: 11px;" class="area col-4">1000 sqrt</p>
+          <p style="font-size: 10px;" class="furnishing col-5">Semi-furnished</p>
+        </span>
+      </div>
+    </div>
+    <div class="desc mt-1">
+      <p style="font-size: 12px;color: #6e6c6c;">asdas dasdsad sa dsa da.</p>
+    </div>
+    <div class="row mt-1">
+      <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
+      <div class="lord-details col-4" style="padding-right: 0;">
+        <h6 style="font-size: 11px;" class="name">Abhishek Singh</h6>
+        <p style="font-size: 10px;color: #6e6c6c;" class="role">Owner</p>
+        <p style="font-size: 10px;color: #6e6c6c;" class="update">Update 5 days ago</p>
+      </div>
+      <div class="chat col-2" style="padding: 0;">
+        <div class="row" style="">
+          <button style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</button>
+          <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
+        </div>
+      </div>
+      <div class="chat col-3">
+          <div class="row" style="">
+            <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <hr>
+  <br>
+
+  <div class="items">
+    <div class="row">
+      <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
+      <div class="body col-7" style="padding-right: 0;">
+        <p class="price">Rs. 100000</p>
+        <p style="line-height: 1;font-size: 12px;" class="title mt-1">afnksafas asd sa dsa da sd sadas.</p>
+        <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">Gomti Nagar, Lucknow</p>
+        <span class="detail mt-1 row" style="justify-content: space-around;width: 100%;">
+          <p style="font-size: 11px;" class="area col-4">1000 sqrt</p>
+          <p style="font-size: 10px;" class="furnishing col-5">Semi-furnished</p>
+        </span>
+      </div>
+    </div>
+    <div class="desc mt-1">
+      <p style="font-size: 12px;color: #6e6c6c;">asdas dasdsad sa dsa da.</p>
+    </div>
+    <div class="row mt-1">
+      <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
+      <div class="lord-details col-4" style="padding-right: 0;">
+        <h6 style="font-size: 11px;" class="name">Abhishek Singh</h6>
+        <p style="font-size: 10px;color: #6e6c6c;" class="role">Owner</p>
+        <p style="font-size: 10px;color: #6e6c6c;" class="update">Update 5 days ago</p>
+      </div>
+      <div class="chat col-2" style="padding: 0;">
+        <div class="row" style="">
+          <button style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</button>
+          <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
+        </div>
+      </div>
+      <div class="chat col-3">
+          <div class="row" style="">
+            <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
+          </div>
+      </div>
+    </div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<div class="items">
+  <div class="row">
+    <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
+    <div class="body col-7" style="padding-right: 0;">
+      <p class="price">Rs. 100000</p>
+      <p style="line-height: 1;font-size: 12px;" class="title mt-1">afnksafas asd sa dsa da sd sadas.</p>
+      <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">Gomti Nagar, Lucknow</p>
+      <span class="detail mt-1 row" style="justify-content: space-around;width: 100%;">
+        <p style="font-size: 11px;" class="area col-4">1000 sqrt</p>
+        <p style="font-size: 10px;" class="furnishing col-5">Semi-furnished</p>
+      </span>
+    </div>
+  </div>
+  <div class="desc mt-1">
+    <p style="font-size: 12px;color: #6e6c6c;">asdas dasdsad sa dsa da.</p>
+  </div>
+  <div class="row mt-1">
+    <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
+    <div class="lord-details col-4" style="padding-right: 0;">
+      <h6 style="font-size: 11px;" class="name">Abhishek Singh</h6>
+      <p style="font-size: 10px;color: #6e6c6c;" class="role">Owner</p>
+      <p style="font-size: 10px;color: #6e6c6c;" class="update">Update 5 days ago</p>
+    </div>
+    <div class="chat col-2" style="padding: 0;">
+      <div class="row" style="">
+        <button style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</button>
+        <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
+      </div>
+    </div>
+    <div class="chat col-3">
+        <div class="row" style="">
+          <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+  function LPclearSearchCity(){
+    document.getElementsByClassName('lp-dyn-city')[0].value = '';
+  }
+  var budgetSlider = document.getElementById("budgetSlider");
+  var budgetLabel = document.getElementById("budgetLabel");
+
+  budgetSlider.addEventListener("input", function() {
+    var budget = budgetSlider.value;
+    console.log(budget.length)
+    if (budget == 100000){
+      budgetLabel.textContent = "₹ " + 1 + 'L';
+    }
+    else if (budget.length == 7){
+      budget = budget.slice(0, 2);
+      budgetLabel.textContent = "₹ " + budget + 'L';
+    }
+    else if (budget.length == 6){
+      budget = budget.slice(0, 1);
+      budgetLabel.textContent = "₹ " + budget + 'L';
+    }
+    else{
+      main_budget = budget.slice(0, 1);
+      deci_budget = budget.slice(1, 2)
+      budgetLabel.textContent = "₹ " + main_budget + '.' + deci_budget + 'Cr';
+    }
+  });
+</script>
+
+{% endblock %}

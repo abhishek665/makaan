@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block body %}
+
+{% include 'components/banner.html' %}
+
+{% load static %}
+{% block style %} 
+<style>
+.video-card{
+
+    justify-content: left;
+    background-color: #f1f1f1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+#vc-card{
+    border: none;
+}
+#vc-card img{
+    max-height: 10vw;
+}
+@media screen and (max-width: 700px) {
+    
+    #vc-card img{
+        max-height: 25vw;
+    }
+}
+#vc-card .col-8{
+    display: grid;
+    align-items: center;
+}
+
+</style>
+{% endblock %}
+<section class="video-card mt-3 col-12 mt-5" style="background-color: white;">
+    <div class="card mb-3" id="vc-card">
+        <div class="row g-0">
+          <div class="col-4">
+            <img src="{%static 'images/bg-2.jpg'%}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-8">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+<style>
+
+.card-img-overlay .row{
+    position: absolute;
+    bottom: 10%;
+    justify-content: space-between;
+}
+.card img{
+    /* opacity: 1; */
+    /* border-radius: 25%; */
+    /* background-color: white; */
+}
+.myslide{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    justify-content: space-between;
+}
+.card{
+    margin: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.sl-sd{
+    font-size: 3.5vw;
+    color: black;
+    font-weight: bold;
+}
+.sl-sd button {
+    font-size: 3.5vw;
+}
+.card p, i{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.card-row{
+    background-color: white;
+    color: black;
+}
+.card-row-dev{
+    font-size: 3vw;
+    text-align: left !important;
+    font-weight: bold;
+    box-shadow: 1px 1px lightgray;
+    border-radius: 25%;
+}
+/* .spotlight #container-sl::-webkit-scrollbar{
+    position: absolute;
+    background-color: black;
+}
+.spotlight #container-sl::-webkit-scrollbar-track{
+    position: absolute;
+    background-color: yellow;
+} */
+
+#container-sl, #container-sl .card{
+    padding: 0;
+}
+.spotlight .card-text {
+  font-size: 3vw;
+}
+.card-img-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+@media screen and (max-width:900px) {
+    #container-sl .card{
+        min-height: 40vh;
+    }
+    #container-sl .card img{
+        height: 100%;
+    }
+}
+@media screen and (min-width: 800px) {
+  .spotlight .card-text{
+    font-size: 1vw;
+  }
+}
+</style>
+<section class="spotlight mt-5">
+    <h1>SpotLight</h1>
+    <div class="container-fluid myslide" id="container-sl" style="position:relative;">
+        <div class="card text-bg-dark col-8 col-lg-4">
+            <img src="{% static 'images/sp1.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h6 class="card-title">Card title</h6>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small>Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card text-bg-dark col-8 col-lg-4">
+            <img src="{% static 'images/sp2.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small>Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        <div class="card text-bg-dark col-8 col-lg-4">
+            <img src="{% static 'images/sp2.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small>Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+          
+</section>
+
+
+
+<section class="top-projects mt-5">
+    <h1>Top Projects</h1>
+    <div class="container-fluid myslide" id="tp-container">
+
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tp1.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tp2.jpeg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+          <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tp3.jpeg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<style>
+    #fp-container .card img{
+        /* width: 30vw; */
+        width: 100%;
+
+    }
+    @media screen and (max-width: 900px) {
+        
+    }
+    #fp-container{
+        padding: 0;
+    }
+    #fp-container .card{
+        padding: 0;
+    }
+</style>
+<section class="focus-projects mt-5">
+    <h1>Projects in Focus</h1>
+    <div class="container-fluid row myslide" id="fp-container">
+        <div class="card text-white col-6 col-lg-4">
+            <img src="{% static 'images/bg-2.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+        <div class="card text-white col-6 col-lg-4">
+            <img src="{% static 'images/bg-2.jpg' %}" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<style>
+    #fd-container .card-body h5{
+        font-size: 2vw;
+    }
+    #fd-container img{
+        height: 100%;
+    } 
+</style>
+<section class="featured-developers mt-5">
+    <h1>Featured Developers</h1>
+    <div class="container-fluid myslide" id="fd-container">
+
+        <div class="card mb-3 col-10 col-lg-3">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="{%static 'images/bg-2.jpg'%}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h6 class="card-title">Card title</h6>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="card mb-3 col-10 col-lg-3">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="{%static 'images/bg-2.jpg'%}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h6 class="card-title">Card title</h6>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="card mb-3 col-10 col-lg-3">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="{%static 'images/bg-2.jpg'%}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h6 class="card-title">Card title</h6>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="card mb-3 col-10 col-lg-3">
+            <div class="row g-0">
+              <div class="col-4">
+                <img src="{%static 'images/bg-2.jpg'%}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="card-body">
+                  <h6 class="card-title">Card title</h6>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="featured-projects mt-5">
+    <h1>Featured Projects</h1>
+    <div class="container-fluid myslide" id="fp-container">
+
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/fp1.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/fp2.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+          <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/fp3.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<section class="trending-projects mt-5">
+    <h1>Trending Projects</h1>
+    <div class="container-fluid myslide" id="td-container">
+
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tpp1.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tpp2.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+          <div class="card col-10 col-lg-4" style="width: 18rem;">
+            <img src="{% static 'images/tpp3.jpg' %}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+{% endblock %}

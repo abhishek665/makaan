@@ -1,0 +1,237 @@
+{%load static%}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/banner.css' %}" />
+{% endblock %}
+<div class="modal" id="cities-modal" tabindex="-1" style="top:7vh;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select City</h5>
+          <button type="button" onclick="closeCitiesModal();" class="btn-close" data-bs-dismiss="cities-modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>You are now searching in <b><span class="dyn-city">Lucknow</span></b></p>
+          <div class="container-fluid">search
+            <div class="mb-3">
+              <input name="search" type="text" onfocus="initializeAutocompleteModal();" class="form-control modal-city-search" data-con="" id="modal-search" placeholder="Search City" aria-describedby="emailHelp">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" onclick="closeCitiesModal();" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+</div>
+  
+<div class="container-fluid main-container pt-4">
+  
+    <div class="mid-body mt-5">  
+      <h1 style="font-size: 3vw; display: inline-block;">Search for properties in <span class="dyn-city">Lucknow</span>.</h1>
+      <p><a style="color: white;" href="/"> makaan.com </a></p>
+    </div>
+  
+    <div class="tab-row mt-5">
+      <button onclick="checkTypeSelect('c-buy');" id="buy" class="btn-tab btn active">Buy</button>
+      <button id="sell" onclick="checkTypeSelect('c-sell');" class="btn-tab btn ">Sell</button>
+      <button id="rent" onclick="checkTypeSelect('c-rent');" class="btn-tab btn ">Rent</button>
+    </div>
+  
+    <div class="tab-body mt-4">
+  
+      <form id="search-form" action="/list_properties/" method="post" enctype="multipart/form-data"> {% csrf_token %}
+        <input type="hidden" data-con="" name="city" id="h-city">
+        <input type="hidden" value="buy" name="type" id="type"/>
+        <input type="hidden" data-con="" name="place" id="h-place"/>
+        <input type="hidden" data-con="" value="buy" name="check-type" id="check-type"/>
+        <input type="hidden" data-con="" name="check-property-type" id="check-property-type"/>
+        <input type="hidden" data-con="Any-BHK" value="[]" name="bhk" id="bhk">
+        <input type="hidden" data-con="Any-Area" value="" name="area" id="area">
+        <input type="hidden" data-con="Any-Price" value="" name="price" id="price">
+        <div class="mb-3 search-container">
+          <input name="search" onfocus="initializeAutocomplete();" type="text" class="form-control" id="search" placeholder="Search Locality" aria-describedby="emailHelp">
+          <!-- <button type="submit" id="search-btn" class="btn"><i class="bi bi-search"></i></button> -->
+          <div class="row container" id="close-search-container-nav" style="position: absolute;display: none;">
+            <p class="col-12 text-dark">You are now searching in <b><span class="dyn-city">Lucknow</span></b><button style="text-decoration: underline;" type="button" class="btn" onclick="searchLocalityCityChange();">Change City</button></p>
+            <button type="button" id="" style="border: 1px solid black;" onclick="closeSearchContainerNav(this);" class="btn mt-4">Close</button>
+          </div>
+        </div>
+      </form>
+</div>
+<div class="city-select">
+    <button data-value="" id="show-city-btn" class="btn" onclick="showCities();"><span class="dyn-city" id="show-city">Lucknow</span> <i class="bi bi-caret-down-fill"></i></button>
+</div>
+
+<div class="list-property">
+    <button class="btn">List property</button>
+</div>
+    
+</div>
+
+
+<!-- search slides -->
+
+<style>
+  .search-carousel-appear{
+    height: 100vh;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    overflow-y: scroll;
+  }
+  #check-property-type-loader label{
+    margin-top: 10px;
+  }
+  /* budget slider */
+  #budgetSlider {
+    width: 100%;
+  }
+
+  #budgetLabel {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+
+</style>
+
+<div class="container-fluid search-carousel-appear" id="search-carousel" style="display:none;">
+  <div class="container mt-5">
+  <button class="btn" onclick="searchCarouselCloseBtn();"><i class="bi bi-arrow-left-circle-fill"></i></button>
+  <h3>You are searching in <span class="dyn-place"></span> of <span class="dyn-city"></span> City.</h3>
+  <form>
+    <div class="mb-3">
+      <h5>I want to</h5>
+      <div class="row mt-5 mb-5">
+        <select class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
+          <option selected>Select Type</option>
+          <option value="c-buy">Buy</option>
+          <option value="c-sell">Sell</option>
+          <option value="c-rent">Rent</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <h5>I want</h5>
+      <div class="row">
+        <div class="form-check col-6">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="appartment" type="radio" name="flexRadioDefault" id="c-appartments">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Appartments
+          </label>
+        </div>
+        <div class="form-check col-6">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="plot" type="radio" name="flexRadioDefault" id="c-plots">
+          <label class="form-check-label" for="flexRadioDefault2">
+            Plots
+          </label>
+        </div>
+        <div class="form-check col-6">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="house" type="radio" name="flexRadioDefault" id="c-houses">
+          <label class="form-check-label" for="flexRadioDefault">
+            Houses
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="mb3">
+      <h5></h5>
+      <div class="container-fluid" id="check-property-type-loader">
+
+        <div class="btn-group row" id="appartments-loader" role="group" aria-label="Basic checkbox toggle button group">
+          <div class="col-5">
+            <input type="checkbox" onchange="checkBhkToggler(this);" class="btn-check" id="1bhk" autocomplete="off">
+            <label class="btn btn-outline-primary" for="1bhk">1 BHK</label>
+          </div>
+          <div class="col-5">
+            <input type="checkbox" onchange="checkBhkToggler(this);" class="btn-check" id="2bhk" autocomplete="off">
+            <label class="btn btn-outline-primary" for="2bhk"> 2 BHK</label>
+          </div>
+          <div class="col-5">
+            <input type="checkbox" onchange="checkBhkToggler(this);" class="btn-check" id="3bhk" autocomplete="off">
+            <label class="btn btn-outline-primary" for="3bhk">3 BHK</label>
+          </div>
+          <div class="col-5">
+            <input type="checkbox" onchange="checkBhkToggler(this);" class="btn-check" id="4bhk" autocomplete="off">
+            <label class="btn btn-outline-primary" for="4bhk">3+ BHK</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- budget slider -->
+    <div class="mb-3 mt-3">
+      <h4>Budget Range</h4>
+      <div class="container-fluid">
+        <input type="range" value="2500000" id="budgetSlider" min="100000" max="50000000" step="1">
+        <p id="budgetLabel">25L</p>
+      </div>
+    </div>
+    <!-- end budget -->
+    <div class="mb-3 mt-3 builtUpSlider">
+      <h4>Built Up Area (Sq.Ft.)</h4>
+      <div class="container-fluid">
+        <input type="range" value="1000" id="builtUpSlider" min="500" max="5000" step="1">
+        <p id="builtUpLabel">1.0k</p>
+      </div>
+    </div>
+    <div class="mb-3" style="display: grid;">
+      <button onclick="submitListPropertyForm();" type="button" class="btn btn-primary">View Properties</button>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- end search slides -->
+
+<!-- filters -->
+
+
+<!-- end of filters -->
+
+
+<script src="{% static 'js/banner.js' %}"> </script>
+<script>
+  // budget slider
+  var budgetSlider = document.getElementById("budgetSlider");
+  var budgetLabel = document.getElementById("budgetLabel");
+
+  budgetSlider.addEventListener("input", function() {
+    var budget = budgetSlider.value;
+    console.log(budget.length)
+    if (budget == 100000){
+      budgetLabel.textContent = "₹ " + 1 + 'L';
+    }
+    else if (budget.length == 7){
+      budget = budget.slice(0, 2);
+      budgetLabel.textContent = "₹ " + budget + 'L';
+    }
+    else if (budget.length == 6){
+      budget = budget.slice(0, 1);
+      budgetLabel.textContent = "₹ " + budget + 'L';
+    }
+    else{
+      main_budget = budget.slice(0, 1);
+      deci_budget = budget.slice(1, 2)
+      budgetLabel.textContent = "₹ " + main_budget + '.' + deci_budget + 'Cr';
+    }
+  });
+  // built up slider
+  // builtUpLabel
+  var builtUpSlider = document.getElementById("builtUpSlider");
+  var builtUpLabel = document.getElementById("builtUpLabel");
+
+  builtUpSlider.addEventListener("input", function() {
+    var budget = builtUpSlider.value;
+    if (budget < 1000){
+      builtUpLabel.textContent = budget; 
+    }
+    else {
+      mb = budget.slice(0, 1);
+      db = budget.slice(1, 2)
+      builtUpLabel.textContent = mb + '.' + db + 'k'; 
+    }
+  });
+</script>
