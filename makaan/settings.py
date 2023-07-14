@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'makaan.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
