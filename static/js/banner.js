@@ -8,49 +8,32 @@ function checkPropertyTypeSelect(e){
     document.getElementById('check-property-type').value = document.getElementById(e.id).getAttribute('data-con');
     if (e.id == 'c-houses'){
         console.log('hou');
-        document.getElementById('check-property-type-loader').innerHTML = '<div class="btn-group row" id="houses-loader" role="group" aria-label="Basic checkbox toggle button group">\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck1">upto 1000sqrft</label>\
-        </div>\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck2"> upto 2000sqrft</label>\
-        </div>\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck3">upto 3000sqrft</label>\
-        </div>\
-        <div class="col-12">\
-        <label class="btn btn-outline-primary" for="btncheck4">\
-          <input type="number" class="form-control" placeholder="Enter Manually" id="btncheck4" autocomplete="off">sqrft.\
-          </label>\
-        </div>\
-      </div>';
-      $('.builtUpSlider').hide();
+        document.getElementById('check-property-type-loader').innerHTML = '';
+      //   '<div class="btn-group row" id="houses-loader" role="group" aria-label="Basic checkbox toggle button group">\
+      //   <div class="col-5">\
+      //     <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">\
+      //     <label class="btn btn-outline-primary" for="btncheck1">upto 1000sqrft</label>\
+      //   </div>\
+      //   <div class="col-5">\
+      //     <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">\
+      //     <label class="btn btn-outline-primary" for="btncheck2"> upto 2000sqrft</label>\
+      //   </div>\
+      //   <div class="col-5">\
+      //     <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">\
+      //     <label class="btn btn-outline-primary" for="btncheck3">upto 3000sqrft</label>\
+      //   </div>\
+      //   <div class="col-12">\
+      //   <label class="btn btn-outline-primary" for="btncheck4">\
+      //     <input type="number" class="form-control" placeholder="Enter Manually" id="btncheck4" autocomplete="off">sqrft.\
+      //     </label>\
+      //   </div>\
+      // </div>';
+      // $('.builtUpSlider').hide();
     }
     if (e.id == 'c-plots'){
         console.log('plots');
-        document.getElementById('check-property-type-loader').innerHTML = '<div class="btn-group row" id="plots-loader" role="group" aria-label="Basic checkbox toggle button group">\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck1">upto 1000sqrft</label>\
-        </div>\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck2"> upto 2000sqrft</label>\
-        </div>\
-        <div class="col-5">\
-          <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">\
-          <label class="btn btn-outline-primary" for="btncheck3">upto 3000sqrft</label>\
-        </div>\
-        <div class="col-12">\
-            <label class="btn btn-outline-primary" for="btncheck4">\
-          <input type="number" class="form-control" placeholder="Enter Manually" id="btncheck4" autocomplete="off">sqrft.\
-          </label>\
-        </div>\
-      </div>';
-      $('.builtUpSlider').hide();
+        document.getElementById('check-property-type-loader').innerHTML = '';
+      // $('.builtUpSlider').hide();
     }
     if (e.id == 'c-appartments'){
         console.log('appar');
@@ -105,9 +88,11 @@ function searchLocalityCityChange(e) {
 function submitListPropertyForm(e){
     budget = document.getElementById('budgetSlider').value;
     built = document.getElementById('builtUpSlider').value;
+    what = document.getElementById('check-property-type').value;
     document.getElementById('price').value = budget;
     document.getElementById('area').value = built;
-    filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value)};
+    filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value),
+              area: built, what: what};
     localStorage.setItem('filter', JSON.stringify(filter));
     $('#search-form').submit();
 }
