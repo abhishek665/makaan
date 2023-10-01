@@ -89,10 +89,11 @@ function submitListPropertyForm(e){
     budget = document.getElementById('budgetSlider').value;
     built = document.getElementById('builtUpSlider').value;
     what = document.getElementById('check-property-type').value;
+    want = document.getElementById('check-type-select').value;
     document.getElementById('price').value = budget;
     document.getElementById('area').value = built;
     filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value),
-              area: built, what: what};
+              area: built, what: what, want: want};
     localStorage.setItem('filter', JSON.stringify(filter));
     $('#search-form').submit();
 }
