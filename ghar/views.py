@@ -6,6 +6,10 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+def test_html(request):
+    return render(request, 'test-html.html')
+
+
 def home(request):
     return render(request, 'body.html')
 

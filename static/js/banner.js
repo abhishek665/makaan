@@ -115,23 +115,23 @@ function checkBhkToggler(e){
     bhk_btn_value = e.value;
     if (bhk_btn_value == 'on'){
         bhk_form_val = document.getElementById('bhk');
-        val = JSON.parse(bhk_form_val.value);
+        val = bhk_form_val.value;
         current = e.id;
         if (!val.includes(current)){
             console.log('entering value')
             val.push(current)
             console.log(val)
-            bhk_form_val.value = JSON.stringify(val);
+            bhk_form_val.value = val;
         }
         e.value = 'off'
     }
     else{
         bhk_form_val = document.getElementById('bhk');
-        val = JSON.parse(bhk_form_val.value);
+        val = bhk_form_val.value;
         current = e.id;
         const newVal = val.filter(item => item !== current);
         console.log(newVal, current, 'iiiiiiiiii');
-        bhk_form_val.value = JSON.stringify(newVal);
+        bhk_form_val.value = newVal;
         e.value = 'on';  
     }
 }
