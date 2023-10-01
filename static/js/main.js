@@ -93,6 +93,7 @@ geocodePromise
         dyn.forEach(function ( e){
           e.innerText = place;
         })
+        console.log('aaaaaaaaaaaaaaaaa', city);
         dynCity = document.querySelectorAll('.dyn-city');
         dynCity.forEach(function(e){
           e.innerText = city;
@@ -123,6 +124,7 @@ autocomplete.addListener("place_changed", function() {
   document.getElementById('h-city').setAttribute('data-con', city);
   localStorage.setItem('city', JSON.stringify(name));
   $('#search').focus();
+  console.log('aaaaaaaaaaaaaaaaa', name);
   dyn = document.querySelectorAll('.dyn-city');
   dyn.forEach(function(e){
     e.innerText = name;
@@ -137,6 +139,7 @@ $(document).ready(function () {
       console.log(ls_city);
     }
     else {
+      console.log('elseeeeeeee');
       localStorage.setItem('city', JSON.stringify('Lucknow'));
     }
     search_modal = document.getElementById('h-city').value;
@@ -150,6 +153,7 @@ $(document).ready(function () {
     dyn.forEach(function ( e){
       e.innerText = place;
     })
+    console.log('ready', city)
     dynCity = document.querySelectorAll('.dyn-city');
     dynCity.forEach(function(e){
       e.innerText = city;

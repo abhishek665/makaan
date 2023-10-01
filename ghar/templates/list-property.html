@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %} {% endblock %}
+{% block head %}
 
+{% endblock %}
 {% load static %}
 {% block body %}
 <!-- custom select style -->
 
 <!-- end -->
 <style>
+body {
+  background-color: #f8f3f3;
+}
 .button-container {
   overflow-x: scroll;
   white-space: nowrap;
@@ -98,20 +103,28 @@
   </div>
 </section>
 
+<style>
+  .toggled-filter-btn{
+    background-color: black;
+    color: white;
+  }
+</style>
+
 <div class="container button-container scrollable-btns" id="all_btn">
 
     <button class="btn button" style="background-color: inherit;">
       <div class="row">
-        <select class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
-          <option selected>Any BHK</option>
-          <option value="c-buy">1 Rk</option>
-          <option value="c-sell">1 BHK</option>
-          <option value="c-rent">2 BHK</option>
-          <option value="c-rent">3 BHK</option>
-          <option value="c-rent">3+ BHK</option>
+        <select onchange="updateFilters();" class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
+          <option selected>Select BHK</option>
+          <option value="1rk">1 Rk</option>
+          <option value="1bhk">1 BHK</option>
+          <option value="2bhk">2 BHK</option>
+          <option value="3bhk">3 BHK</option>
+          <option value="3+bhk">3+ BHK</option>
         </select>
       </div>
     </button>
+    <div style="display: inline-block; background-color: inherit;position: inherit;" id="bhk-selected-option"></div>
     <div class="dropdown" style="display: inline-block; background-color: inherit;position: inherit;">
       <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         Any Price
@@ -120,26 +133,106 @@
       <ul class="dropdown-menu">
         <li>
           <div class="container-fluid">
-            <input type="range" value="2500000" id="budgetSlider" min="100000" max="50000000" step="1" style="width: 50vw;">
+            <input type="range" onchange="filterUpdate();" value="2500000" id="budgetSlider" min="100000" max="50000000" step="1" style="width: 50vw;">
             <p id="budgetLabel">25L</p>
           </div>
         </li>
       </ul>
+      <button class="btn" style="border: 1px solid;">More Filters <i class="bi bi-filter"></i></button>
+      <button class="button filter-btn" onclick="toggleFilter(this);">Owner</button>
+      <button class="button filter-btn" onclick="toggleFilter(this);">Verified</button>
+      <button class="button filter-btn" onclick="toggleFilter(this);">With Images</button>
     </div>
-    <button class="button" onclick="">Owner</button>
-    <button class="button" onclick="">Verified</button>
-    <button class="button" onclick="">With Images</button>
-    <!-- <a type="button" href="/service/{{active.name|cut:' '}}/{{active.uid}}" class="button btn-active">BHK</a> -->
-    {% for i in 'abcde' %}
-    <a type="button" href="/service/{{i.name|cut:' '}}/{{i.uid}}" class="button" onclick="">Price</a>
-    {% endfor %}
-
 </div>
 
+<script>
+  function toggleFilter(e){
+    e.classList.toggle('toggled-filter-btn')
+  }
+  function filterUpdate(){
+    console.log('changing');
+  }
+  function updateFilters(){
+    selected_value = document.getElementById('check-type-select').value;
+    filters = JSON.parse(localStorage.getItem('filter'));
+    bhk = filters.bhk;
+    if (selected_value in bhk){
+      return
+    }
+    else{
+      console.log('bhkkkk', selected_value);
+      bhk.push(selected_value);
+      filters.bhk = bhk;
+      console.log(bhk, filters);
+      localStorage.setItem('filter', JSON.stringify(filters));
+      bhk = `<button type="button" class="btn btn-primary position-relative">${selected_value}\
+        <span onclick="deletebhkoption(this);" data-my="${selected_value}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">X\
+        </span></button>`;
+      document.getElementById('bhk-selected-option').innerHTML += bhk;
+    }
+  }
+  function deletebhkoption(e){
+    console.log('inside');
+    filters = JSON.parse(localStorage.getItem('filter'));
+    option_del = e.getAttribute('data-my');
+    bhk = filters.bhk;
+    if (bhk.includes(option_del)){
+      sbhk = '';
+      indexofdelitem = bhk.indexOf(option_del)
+      bhk.splice(indexofdelitem, 1);
+      for(i=0; i<bhk.length; i++){
+        console.log(fbhk, fbhk[i], fbhk.i);
+        sbhk += `<button type="button" class="btn btn-primary position-relative">${bhk[i]}\
+        <span onclick="deletebhkoption(this);" data-my="${bhk[i]}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">X\
+        </span></button>`;
+      }
+      document.getElementById('bhk-selected-option').innerHTML = sbhk;
+      filters.bhk = bhk;
+      console.log(bhk, filters.bhk)
+      localStorage.setItem('filter', JSON.stringify(filters));
+    }
+    else{
+      console.log('not inside');
+    }
+  }
+  $(document).ready(function () {
+    filters = JSON.parse(localStorage.getItem('filter'));
+    bhk = ''
+    fbhk = filters.bhk;
+    for(i=0; i<fbhk.length; i++){
+        console.log(fbhk, fbhk[i], fbhk.i);
+        bhk += `<button type="button" class="btn btn-primary position-relative">${fbhk[i]}\
+        <span onclick="deletebhkoption(this);" data-my="${fbhk[i]}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">X\
+        </span></button>`;
+    }
+    document.getElementById('bhk-selected-option').innerHTML += bhk;
+    innerWidth = window.innerWidth;
+    if (innerWidth > 600){
+      lp = document.getElementById('lp-listing');
+      lp.classList.add('col-8');
+      lp.style.cssText = 'margin-left:0;'
+    }
+  })
+  
+</script>
+
+<!-- more filters -->
+
+<!-- end of more filters -->
 <style>
   .lp-listing p{
     padding: 0;
     margin: 0;
+  }
+  .lp-listing{
+    padding: 5px 16px;
+  }
+  .items{
+    background-color: white;
+    border-radius: 5%;
+  }
+  hr{
+    color: black;
   }
 </style>
 
@@ -150,12 +243,12 @@
   <h6>600 Flats for Rent in Gomti Nagar</h6>
 </div>
 
-<div class="container-fluid lp-listing">
+<div class="container-fluid lp-listing" id="lp-listing">
   <div class="items">
     <div class="row">
       <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
       <div class="body col-7" style="padding-right: 0;">
-        <p class="price">Rs. 100000</p>
+        <a href="/property_view/1234" class="price">Rs. 100000</a>
         <p style="line-height: 1;font-size: 12px;" class="title mt-1">afnksafas asd sa dsa da sd sadas.</p>
         <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">Gomti Nagar, Lucknow</p>
         <span class="detail mt-1 row" style="justify-content: space-around;width: 100%;">
@@ -181,7 +274,7 @@
         </div>
       </div>
       <div class="chat col-3">
-          <div class="row" style="">
+          <div class="row" style="display: inline-block;">
             <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
           </div>
       </div>
@@ -222,7 +315,7 @@
         </div>
       </div>
       <div class="chat col-3">
-          <div class="row" style="">
+          <div class="row" style="display: inline-block;">
             <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
           </div>
       </div>
@@ -263,7 +356,7 @@
       </div>
     </div>
     <div class="chat col-3">
-        <div class="row" style="">
+        <div class="row" style="display: inline-block;">
           <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
         </div>
     </div>
@@ -300,5 +393,4 @@
     }
   });
 </script>
-
 {% endblock %}

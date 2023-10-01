@@ -13,3 +13,7 @@ def home(request):
 def list_properties(request):
     print(request.POST)
     return render(request, 'list-property.html')
+
+
+def property_view(request, prop_id):
+    return render(request, 'prop-view.html')

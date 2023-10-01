@@ -107,6 +107,8 @@ function submitListPropertyForm(e){
     built = document.getElementById('builtUpSlider').value;
     document.getElementById('price').value = budget;
     document.getElementById('area').value = built;
+    filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value)};
+    localStorage.setItem('filter', JSON.stringify(filter));
     $('#search-form').submit();
 }
 function checkBhkToggler(e){
