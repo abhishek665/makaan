@@ -201,16 +201,16 @@ $(document).ready(function () {
 // lp page
 
 function lpinitializeAutocomplete() {
-  if (window.innerWidth < 600){
-      $('#my-nav-container').css({'display': 'none'});
-      document.getElementsByClassName('search-container')[0].classList.add('search-container-nav');
-      $('#close-search-container-nav').css({'display': 'inline-block'});
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth" // Optional: Add smooth scrolling animation
-      });
-      $('body').css({'overflow': 'hidden'})
-    }
+  // if (window.innerWidth < 600){
+  //     $('#my-nav-container').css({'display': 'none'});
+  //     document.getElementsByClassName('search-container')[0].classList.add('search-container-nav');
+  //     $('#close-search-container-nav').css({'display': 'inline-block'});
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "smooth" // Optional: Add smooth scrolling animation
+  //     });
+  //     $('body').css({'overflow': 'hidden'})
+  //   }
 const input = document.getElementById('search');
 console.log(input);
 city = JSON.parse(localStorage.getItem('city'));
