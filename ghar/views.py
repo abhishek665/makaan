@@ -1,3 +1,4 @@
+import json
 import time
 
 from django.shortcuts import render
@@ -16,6 +17,11 @@ def home(request):
 
 def list_properties(request):
     print(request.POST)
+    try:
+        data = request.POST['data']
+        print(json.loads(data))
+    except Exception as e:
+        print(e)
     return render(request, 'list-property.html')
 
 

@@ -95,7 +95,7 @@ body {
       <p>You are now searching in <b><span class="dyn-city">Lucknow</span></b></p>
       <div class="container-fluid">
         <div class="mb-3 row">
-          <input name="search" type="text" onfocus="initializeAutocompleteModal();" class="form-control modal-city-search lp-dyn-city" data-con="" id="modal-search" placeholder="Search City" aria-describedby="emailHelp" style="width: 80%;">
+          <input name="search" type="text" onfocus="lpinitializeAutocomplete();" class="form-control modal-city-search lp-dyn-place" data-con="" id="search" placeholder="Search City" aria-describedby="emailHelp" style="width: 80%;">
           <button class="btn col-2" style="border: 1px solid rgba(0, 0, 0, 0.5);" onclick="LPclearSearchCity();"><i class="bi bi-x-circle col-2"></i></button>
         </div>
       </div>
@@ -111,7 +111,7 @@ body {
 </style>
 
 <div class="container button-container scrollable-btns" id="all_btn">
-
+    
     <button id="what-selector" class="btn button" style="background-color: inherit;">
       <div class="row">
         <select onchange="whatUpdate();" class="form-select form-select-md" name="check-what-select" id="check-what-select" aria-label=".form-select-sm example">
@@ -178,7 +178,7 @@ body {
     filters = JSON.parse(localStorage.getItem('filter'));
     filters.what = what;
     localStorage.setItem('filter', JSON.stringify(filters));
-    location.reload(true);
+    filterSubmitForm(JSON.stringify(filters));
   }
   function filterUpdate(e){
     console.log('changing');
@@ -187,11 +187,13 @@ body {
       price = document.getElementById('budgetSlider').value;
       filters.price = price;
       localStorage.setItem('filter', JSON.stringify(filters));
+      filterSubmitForm(JSON.stringify(filters));
     }
     else{
       area = document.getElementById('builtUpSlider').value;
       filters.area = area;
       localStorage.setItem('filter', JSON.stringify(filters));
+      filterSubmitForm(JSON.stringify(filters));
     }
   }
   function updateFilters(){
@@ -207,10 +209,7 @@ body {
       filters.bhk = bhk;
       console.log(bhk, filters);
       localStorage.setItem('filter', JSON.stringify(filters));
-      bhk = `<button type="button" class="btn btn-primary position-relative">${selected_value}\
-        <span onclick="deletebhkoption(this);" data-my="${selected_value}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">X\
-        </span></button>`;
-      document.getElementById('bhk-selected-option').innerHTML += bhk;
+      filterSubmitForm(JSON.stringify(filters));
     }
   }
   function deletebhkoption(e){
@@ -222,16 +221,10 @@ body {
       sbhk = '';
       indexofdelitem = bhk.indexOf(option_del)
       bhk.splice(indexofdelitem, 1);
-      for(i=0; i<bhk.length; i++){
-        console.log(fbhk, fbhk[i], fbhk.i);
-        sbhk += `<button type="button" class="btn btn-primary position-relative">${bhk[i]}\
-        <span onclick="deletebhkoption(this);" data-my="${bhk[i]}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">X\
-        </span></button>`;
-      }
-      document.getElementById('bhk-selected-option').innerHTML = sbhk;
       filters.bhk = bhk;
       console.log(bhk, filters.bhk)
       localStorage.setItem('filter', JSON.stringify(filters));
+      filterSubmitForm(JSON.stringify(filters));
     }
     else{
       console.log('not inside');
@@ -258,6 +251,7 @@ body {
       $('#area-dropdown').hide();
     }
     document.getElementById('whatLabel').innerText = filters.what;
+    document.getElementById('search').setAttribute('value', JSON.parse(localStorage.getItem('place')));
     innerWidth = window.innerWidth;
     if (innerWidth > 600){
       lp = document.getElementById('lp-listing');
@@ -321,13 +315,13 @@ body {
       </div>
       <div class="chat col-2" style="padding: 0;">
         <div class="row" style="">
-          <button style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</button>
+          <a type="button" href="https://wa.me/+918887896739" style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</a>
           <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
         </div>
       </div>
       <div class="chat col-3">
           <div class="row" style="display: inline-block;">
-            <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
+            <a type="button" style="font-size: 13px;" href="tel:+918887896739" class="btn col-12 btn-success">Contact</a>
           </div>
       </div>
     </div>
@@ -362,13 +356,13 @@ body {
       </div>
       <div class="chat col-2" style="padding: 0;">
         <div class="row" style="">
-          <button style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</button>
+          <a type="button" href="https://wa.me/+918887896739" style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</a>
           <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
         </div>
       </div>
       <div class="chat col-3">
           <div class="row" style="display: inline-block;">
-            <button style="font-size: 13px;" class="btn col-12 btn-success">Contact</button>
+            <a type="button" href="tel:+918887896739" style="font-size: 13px;" class="btn col-12 btn-success">Contact</a>
           </div>
       </div>
     </div>
@@ -419,7 +413,8 @@ body {
 <script src="{% static 'js/main.js' %}"></script>
 <script>
   function LPclearSearchCity(){
-    document.getElementsByClassName('lp-dyn-city')[0].value = '';
+    // document.getElementsByClassName('lp-dyn-city')[0].value = '';
+    document.getElementsByClassName('lp-dyn-place')[0].value = '';
   }
   var budgetSlider = document.getElementById("budgetSlider");
   var budgetLabel = document.getElementById("budgetLabel");

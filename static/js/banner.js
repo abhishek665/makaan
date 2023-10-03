@@ -95,7 +95,8 @@ function submitListPropertyForm(e){
     filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value),
               area: built, what: what, want: want};
     localStorage.setItem('filter', JSON.stringify(filter));
-    $('#search-form').submit();
+    // $('#search-form').submit();
+    filterSubmitForm(JSON.stringify(filter));
 }
 function checkBhkToggler(e){
     bhk_btn_value = e.value;

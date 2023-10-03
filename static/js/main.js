@@ -1,3 +1,28 @@
+function filterSubmitForm(e){
+  url = '/list_properties/';
+
+  const form = document.createElement('form');
+  form.method = 'POST'; // Use the POST method
+  form.action = url; // Set the form's action to the URL
+  form.enctype = 'multipart/form-data';
+
+  // Define the data to be sent as POST parameters
+  const postData = {
+    data: e
+  };
+  const input = document.createElement('input');
+  input.type = 'hidden'; // Use hidden input fields
+  input.name = 'data';
+  input.value = postData.data;
+  form.appendChild(input);
+  document.body.appendChild(form);
+  const csrf = document.getElementById('csrfmiddlewaretoken');
+  form.appendChild(csrf);
+  document.body.appendChild(form);
+  form.submit();
+
+}
+
 function setCityModal(){
     
 }
@@ -45,7 +70,8 @@ function initializeAutocomplete() {
       });
       $('body').css({'overflow': 'hidden'})
     }
-const input = document.getElementById('search');
+const input = document.getElementById('search').value;
+console.log(input);
 const city = document.getElementById('h-city').getAttribute('value');
 console.log('oiiiiiiiiiiiiiiiiiiiii', city)
 const geocoder = new google.maps.Geocoder();
@@ -108,11 +134,13 @@ geocodePromise
 }
 function initializeAutocompleteModal() {
 const input = document.getElementById('modal-search');
+console.log('entereees');
 const options = {
   types: ['geocode'],
   componentRestrictions: { country: 'IN' }
 };
 const autocomplete = new google.maps.places.Autocomplete(input, options);
+console.log(input);
 autocomplete.addListener("place_changed", function() {
   $('#cities-modal').hide();
   city = document.getElementsByClassName('modal-city-search')[0].value;
@@ -158,10 +186,95 @@ $(document).ready(function () {
     dynCity.forEach(function(e){
       e.innerText = city;
     })
-    document.getElementsByClassName('lp-dyn-city')[0].value = city;
+    // document.getElementsByClassName('lp-dyn-city')[0].value = city;
+    document.getElementsByClassName('lp-dyn-place')[0].value = place;
   }
   catch {
     city = JSON.parse(localStorage.getItem('city'));
-    document.getElementsByClassName('lp-dyn-city')[0].value = city;
+    // document.getElementsByClassName('lp-dyn-city')[0].value = city;
+    document.getElementsByClassName('lp-dyn-place')[0].value = place;
   }
 })
+
+
+
+// lp page
+
+function lpinitializeAutocomplete() {
+  if (window.innerWidth < 600){
+      $('#my-nav-container').css({'display': 'none'});
+      document.getElementsByClassName('search-container')[0].classList.add('search-container-nav');
+      $('#close-search-container-nav').css({'display': 'inline-block'});
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth" // Optional: Add smooth scrolling animation
+      });
+      $('body').css({'overflow': 'hidden'})
+    }
+const input = document.getElementById('search');
+console.log(input);
+city = JSON.parse(localStorage.getItem('city'));
+// city = lo_sto.city;
+console.log('oiiiiiiiiiiiiiiiiiiiii', city)
+const geocoder = new google.maps.Geocoder();
+let latitude = 0
+let longitude = 0
+// Perform geocoding for the city
+const geocodePromise = new Promise((resolve, reject) => {
+
+  geocoder.geocode({ address: city }, (results, status) => {
+    if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
+        // Get the latitude and longitude of the first result
+      resolve(results[0].geometry.location);
+    } else {
+      reject(status);
+    }
+  }); 
+});
+geocodePromise
+.then((location) => {
+      latitude = location.lat();
+      longitude = location.lng();
+
+      // Use the latitude and longitude as needed
+      console.log("Latitude:", latitude);
+      console.log("Longitude:", longitude);
+      let lucknowBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(latitude, longitude), // Southwest corner coordinates
+      new google.maps.LatLng(latitude + 0.10, longitude + 0.10) // Northeast corner coordinates
+    );
+    console.log(latitude, longitude, 'hhhhhhhhhhhhhhhhhhhhhhhh');
+    const autocomplete = new google.maps.places.Autocomplete(input, {bounds: lucknowBounds});
+    autocomplete.addListener("place_changed", function() {
+        // document.getElementsByClassName('search-container')[0].classList.remove('search-container-nav');
+        // $('#my-nav-container').css({'display': 'flex'});
+        // carousel = document.getElementById('search-carousel');
+        // carousel.style = 'display: block';
+        // carousel.classList.add('search-carousel-appear');
+        // $('#c-appartments').click();
+        full_place = document.getElementById('search').value;
+        // document.getElementById('h-place').setAttribute('data-con', place)
+        place = full_place.split(',')[0]
+        // document.getElementById('h-place').setAttribute('value', place)
+        localStorage.setItem('place', JSON.stringify(place))
+        // dyn = document.querySelectorAll('.dyn-place');
+        // dyn.forEach(function ( e){
+        //   e.innerText = place;
+        // })
+        // console.log('aaaaaaaaaaaaaaaaa', city);
+        // dynCity = document.querySelectorAll('.dyn-city');
+        // dynCity.forEach(function(e){
+        //   e.innerText = city;
+        // })
+        filters = JSON.parse(localStorage.getItem('filter'));
+        filters.full_place = full_place
+        localStorage.setItem('filter', JSON.stringify(filters));
+        filterSubmitForm(JSON.stringify(filters));
+
+    })
+}).catch((error) => {
+  // Geocoding failed
+  console.log("Geocoding failed:", error);
+});
+
+}
