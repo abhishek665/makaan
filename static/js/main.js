@@ -70,7 +70,7 @@ function initializeAutocomplete() {
       });
       $('body').css({'overflow': 'hidden'})
     }
-const input = document.getElementById('search').value;
+const input = document.getElementById('search');
 console.log(input);
 const city = document.getElementById('h-city').getAttribute('value');
 console.log('oiiiiiiiiiiiiiiiiiiiii', city)
