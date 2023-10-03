@@ -112,6 +112,17 @@ body {
 
 <div class="container button-container scrollable-btns" id="all_btn">
 
+    <button id="what-selector" class="btn button" style="background-color: inherit;">
+      <div class="row">
+        <select onchange="whatUpdate();" class="form-select form-select-md" name="check-what-select" id="check-what-select" aria-label=".form-select-sm example">
+          <option id="whatLabel" selected style="display: none;"></option>
+          <option value="appartments">Appartments</option>
+          <option value="houses">Houses</option>
+          <option value="plots">Plots</option>
+        </select>
+      </div>
+    </button>
+
     <button id="apartment-selector" class="btn button" style="background-color: inherit;">
       <div class="row">
         <select onchange="updateFilters();" class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
@@ -161,6 +172,13 @@ body {
 <script>
   function toggleFilter(e){
     e.classList.toggle('toggled-filter-btn')
+  }
+  function whatUpdate(){
+    what = document.getElementById('check-what-select').value;
+    filters = JSON.parse(localStorage.getItem('filter'));
+    filters.what = what;
+    localStorage.setItem('filter', JSON.stringify(filters));
+    location.reload(true);
   }
   function filterUpdate(e){
     console.log('changing');
@@ -232,12 +250,14 @@ body {
     document.getElementById('bhk-selected-option').innerHTML += bhk;
     document.getElementById('budgetSlider').setAttribute('value', filters.price);
     document.getElementById('builtUpSlider').setAttribute('value', filters.area);
-    if (filters.what == 'plot'){
+    if (filters.what == 'plots' || filters.what == 'houses'){
       $('#apartment-selector').hide();
+      $('#bhk-selected-option').hide();
     }
     else{
       $('#area-dropdown').hide();
     }
+    document.getElementById('whatLabel').innerText = filters.what;
     innerWidth = window.innerWidth;
     if (innerWidth > 600){
       lp = document.getElementById('lp-listing');
