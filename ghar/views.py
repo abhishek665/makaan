@@ -33,13 +33,13 @@ def list_properties(request):
         price = inc_data['price']
         if inc_data['what'].lower() == 'plots':
             area = inc_data['area']
-            data = Property.objects.filter(address__contains=place, type='plots', area__lte=int(area),
+            data = Property.objects.filter(address__contains=place.lower(), type='plots', area__lte=int(area),
                                            price__lte=int(price))
             images = PropertyImage.objects.filter(ref__in=[x for x in data])
             return render(request, 'list-property.html', {'data': zip(data, images)})
         elif inc_data['what'].lower() == 'houses':
             area = inc_data['area']
-            data = Property.objects.filter(address__contains=place, type='houses', area__lte=int(area),
+            data = Property.objects.filter(address__contains=place.lower(), type='houses', area__lte=int(area),
                                            price__lte=int(price))
             images = PropertyImage.objects.filter(ref__in=[x for x in data])
             print(images, data, zip(data, images))
