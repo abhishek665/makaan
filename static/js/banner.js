@@ -90,10 +90,12 @@ function submitListPropertyForm(e){
     built = document.getElementById('builtUpSlider').value;
     what = document.getElementById('check-property-type').value;
     want = document.getElementById('check-type-select').value;
+    full_place = document.getElementById('search').value;
+    place = full_place.split(',')[0]
     document.getElementById('price').value = budget;
     document.getElementById('area').value = built;
     filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value),
-              area: built, what: what, want: want};
+              area: built, what: what, want: want, place: place, full_place: full_place};
     localStorage.setItem('filter', JSON.stringify(filter));
     // $('#search-form').submit();
     filterSubmitForm(JSON.stringify(filter));
@@ -122,3 +124,7 @@ function checkBhkToggler(e){
         e.value = 'on';  
     }
 }
+
+// $(document).ready(function (){
+//   document.getElementById('check-type-select').value = 'c-buy';
+// })

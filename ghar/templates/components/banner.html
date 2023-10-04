@@ -106,8 +106,8 @@
       <h5>I want to</h5>
       <div class="row mt-5 mb-5">
         <select class="form-select form-select-md" name="check-type-select" id="check-type-select" aria-label=".form-select-sm example">
-          <option selected>Select Type</option>
-          <option value="c-buy">Buy</option>
+          <!-- <option selected>Select Type</option> -->
+          <option value="c-buy" selected>Buy</option>
           <!-- <option value="c-sell">Sell</option> -->
           <option value="c-rent">Rent</option>
         </select>
@@ -117,19 +117,19 @@
       <h5>I want</h5>
       <div class="row">
         <div class="form-check col-6">
-          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="appartment" type="radio" name="flexRadioDefault" id="c-appartments">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="appartments" type="radio" name="flexRadioDefault" id="c-appartments">
           <label class="form-check-label" for="flexRadioDefault1">
             Appartments
           </label>
         </div>
         <div class="form-check col-6">
-          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="plot" type="radio" name="flexRadioDefault" id="c-plots">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="plots" type="radio" name="flexRadioDefault" id="c-plots">
           <label class="form-check-label" for="flexRadioDefault2">
             Plots
           </label>
         </div>
         <div class="form-check col-6">
-          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="house" type="radio" name="flexRadioDefault" id="c-houses">
+          <input class="form-check-input" onchange="checkPropertyTypeSelect(this);" data-con="houses" type="radio" name="flexRadioDefault" id="c-houses">
           <label class="form-check-label" for="flexRadioDefault">
             Houses
           </label>

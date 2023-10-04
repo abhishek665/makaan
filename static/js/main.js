@@ -267,7 +267,8 @@ geocodePromise
         //   e.innerText = city;
         // })
         filters = JSON.parse(localStorage.getItem('filter'));
-        filters.full_place = full_place
+        filters.full_place = full_place;
+        filters.place = place;
         localStorage.setItem('filter', JSON.stringify(filters));
         filterSubmitForm(JSON.stringify(filters));
 

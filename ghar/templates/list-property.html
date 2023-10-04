@@ -11,7 +11,7 @@
 <!-- end -->
 <style>
 body {
-  background-color: #f8f3f3;
+  /* background-color: #f8f3f3; */
 }
 .button-container {
   overflow-x: scroll;
@@ -253,7 +253,7 @@ body {
     document.getElementById('whatLabel').innerText = filters.what;
     document.getElementById('search').setAttribute('value', JSON.parse(localStorage.getItem('place')));
     innerWidth = window.innerWidth;
-    if (innerWidth > 600){
+    if (innerWidth > 800){
       lp = document.getElementById('lp-listing');
       lp.classList.add('col-8');
       lp.style.cssText = 'margin-left:0;'
@@ -290,30 +290,32 @@ body {
 </div>
 
 <div class="container-fluid lp-listing" id="lp-listing">
+  {% for i, j in data %}
   <div class="items">
     <div class="row">
-      <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
+      <img style="height: 15vh; padding: 0;" class="col-5" src="/media/{{j.image1}}" alt="listing" />
       <div class="body col-7" style="padding-right: 0;">
-        <a href="/property_view/1234" class="price">Rs. 100000</a>
-        <p style="line-height: 1;font-size: 12px;" class="title mt-1">afnksafas asd sa dsa da sd sadas.</p>
-        <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">Gomti Nagar, Lucknow</p>
+        <a style="font-size: 14px;" href="/property_view/{{i.id}}" class="price">&#8377; {{i.price}}</a>
+        <h5 style="line-height: 1;font-size: 12px;" class="title mt-1">{{i.property_title}}</h5>
+        <p style="font-size: 12px;color: #6e6c6c;" class="location mt-2">{{i.place}}</p>
         <span class="detail mt-1 row" style="justify-content: space-around;width: 100%;">
-          <p style="font-size: 11px;" class="area col-4">1000 sqrt</p>
-          <p style="font-size: 10px;" class="furnishing col-5">Semi-furnished</p>
+          <p style="font-size: 11px;" class="area col-4">{{i.area}}sqrft</p>
+          <p style="font-size: 10px;" class="furnishing col-5">{{i.furnishing}}</p>
         </span>
       </div>
     </div>
-    <div class="desc mt-1">
+    <!-- <div class="desc mt-1">
       <p style="font-size: 12px;color: #6e6c6c;">asdas dasdsad sa dsa da.</p>
-    </div>
+    </div> -->
     <div class="row mt-1">
-      <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
+      <p style="font-size: 10px;" class="col-12">{{i.desc}}</p>
+      <!-- <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
       <div class="lord-details col-4" style="padding-right: 0;">
         <h6 style="font-size: 11px;" class="name">Abhishek Singh</h6>
         <p style="font-size: 10px;color: #6e6c6c;" class="role">Owner</p>
         <p style="font-size: 10px;color: #6e6c6c;" class="update">Update 5 days ago</p>
-      </div>
-      <div class="chat col-2" style="padding: 0;">
+      </div> -->
+      <div class="chat col-3" style="padding: 0;">
         <div class="row" style="">
           <a type="button" href="https://wa.me/+918887896739" style="font-size: 15px;margin-right: 2px;" class="btn col-5">Chat</a>
           <i style="font-size: 12px;align-items: center;display: flex;" class="bi bi-whatsapp col-6"></i>
@@ -326,12 +328,12 @@ body {
       </div>
     </div>
   </div>
-
   <br>
   <hr>
   <br>
+  {% endfor %}
 
-  <div class="items">
+  <!-- <div class="items">
     <div class="row">
       <img style="height: 15vh; padding: 0;" class="col-5" src="{% static 'images/bg-2.jpg' %}" alt="listing" />
       <div class="body col-7" style="padding-right: 0;">
@@ -407,7 +409,7 @@ body {
         </div>
     </div>
   </div>
-</div>
+</div> -->
 </div>
 
 <script src="{% static 'js/main.js' %}"></script>
