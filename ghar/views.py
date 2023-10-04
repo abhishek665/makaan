@@ -1,12 +1,13 @@
 import json
 import time
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponse
-from .models import PropertyImage, Property, CustomerQueries, CustomerContact
+from .models import PropertyImage, Property, CustomerQueries, CustomerContact, Agent
 from itertools import chain
 from .utils import img_filter_condition
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -93,3 +94,61 @@ def customer_contact(request):
             print(e)
             return HttpResponse(json.dumps({'status': False, 'msg': str(e)}))
     return HttpResponse(json.dumps({'status': False, 'msg': 'Invalid Request'}))
+
+
+@login_required(login_url='/signin')
+def prop_img_upload(request):
+    if request.POST:
+        data = request.POST
+        images = request.FILES.getlist('images[]')
+        print(request.POST, len(request.FILES.getlist('images[]')))
+        my_data = {}
+        my_img = {}
+        img_key = 'image'
+        for i in data.keys():
+            my_data[i] = data[i]
+        my_data.pop('csrfmiddlewaretoken')
+        my_data.pop('agent')
+        for i in my_data.keys():
+            print(i, my_data[i], my_data[i] == 'on')
+            if my_data[i] == 'on':
+                my_data[i] = True
+            if my_data[i] == 'off':
+                my_data[i] = False
+        print(my_data)
+        agent = Agent.objects.get(username=request.user)
+        print('ageeeeeeeeeeeeeeeeeeee', agent)
+        property = Property(ref=agent, **my_data)
+        property.save()
+        for i in range(0, len(images)):
+            my_img[img_key + str(i+1)] = images[i]
+
+        print(my_img)
+        PropertyImage(ref=property, **my_img).save()
+
+        return render(request, 'prop-img-upload.html', {'status': True, 'msg': 'Property saved successfully.'})
+
+    return render(request, 'prop-img-upload.html')
+
+
+def sign_in(request):
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username, password)
+
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user:
+            print(user)
+            login(request, user)
+            return redirect('/prop_img_upload')
+    return render(request, 'login.html')
+
+
+def sign_out(request):
+    pass
+
+
+def sign_up(request):
+    pass
