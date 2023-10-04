@@ -35,6 +35,24 @@
     {% block style %} {% endblock %}
   </head>
 
+  <style>
+    .shake {
+    animation: shake 0.5s cubic-bezier(0.36, 2.5, 0.63, 0.9) both;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+  </style>
+
 <nav style="z-index: 1000;" class="navbar navbar-expand-lg sticky-top bg-body-tertiary">
   <div class="container-fluid" id="my-nav-container">
     <a class="navbar-brand" href="/">Makaan</a>
@@ -117,6 +135,11 @@ function customerContactModalCLose(){
   if (!check_contact){
     $('#customer_contact_modal').show();
   }
+  $('#customer_contact_modal').addClass("shake");
+  // Remove the "shake" class after the animation completes
+  setTimeout(() => {
+      $('#customer_contact_modal').removeClass("shake");
+  }, 100);
 }
 $(document).ready(function () {
   check_contact = JSON.parse(localStorage.getItem('customer_contact'));
