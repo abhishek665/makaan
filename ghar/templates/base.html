@@ -114,7 +114,7 @@
 function customerContactModalCLose(){
   $('#customer_contact_modal').hide();
   check_contact = JSON.parse(localStorage.getItem('customer_contact'));
-  if (!check_contact.number|length == 10){
+  if (!check_contact){
     $('#customer_contact_modal').show();
   }
 }
