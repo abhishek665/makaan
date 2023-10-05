@@ -29,16 +29,40 @@ img{
 }
 
 .carousel-item {
-    height: 50vh;
-    max-height: 50vh;
+    /* height: 50vh; */
+    max-height: 100vh;
 }
 .viewmode {
     position: absolute;
-    width: 90vw;
+    width: 70%;
     margin: auto;
-    height: auto;
-    max-height:max-content;
+    height: 90vh;
+    max-height:90vh;
+    overflow: hidden;
 }
+ .viewmode img {
+  max-height: 85vh;
+  height: 85vh;
+ }
+ @media screen and (max-width: 700px) {
+  .carousel-item {
+    /* height: 50vh; */
+    max-height: 100vh;
+  }
+  .viewmode {
+      position: absolute;
+      width: 100%;
+      margin: auto;
+      height: 80vh;
+      max-height:100vh;
+      overflow: hidden;
+  }
+  .viewmode img {
+    width: 100%;
+    max-height: 100vh;
+    height: 75vh;
+  }
+ }
 </style>
   
   <!-- content -->

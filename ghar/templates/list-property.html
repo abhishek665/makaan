@@ -62,6 +62,16 @@ body {
 .button-range-slider{
   display: none;
 }
+.lp-listing .row img{
+  max-width: 40%;
+  width: auto;
+  height: auto;
+}
+@media screen and (max-width: 700px) {
+  .lp-listing .row img{
+    max-width: 33%;
+  }
+}
 </style>
 
 
@@ -280,6 +290,16 @@ body {
   hr{
     color: black;
   }
+  .lp-listing .row img{
+  max-width: 40%;
+  width: auto;
+  height: auto;
+}
+@media screen and (max-width: 700px) {
+  .lp-listing .row img{
+    max-width: 40%;
+  }
+}
 </style>
 
 <div class="container-fluid url-location">
@@ -291,9 +311,9 @@ body {
 
 <div class="container-fluid lp-listing" id="lp-listing">
   {% for i, j in data %}
-  <div class="items">
+  <div class="items" data-my="/property_view/{{i.id}}" onclick="hrefPropView(this);">
     <div class="row">
-      <img style="height: 15vh; padding: 0;" class="col-5" src="/media/{{j.image1}}" alt="listing" />
+      <img style="height: auto; padding: 0;" class="col-5" src="/media/{{j.image1}}" alt="listing" />
       <div class="body col-7" style="padding-right: 0;">
         <a style="font-size: 14px;" href="/property_view/{{i.id}}" class="price">&#8377; {{i.price}}</a>
         <h5 style="line-height: 1;font-size: 12px;" class="title mt-1">{{i.property_title}}</h5>
@@ -332,6 +352,12 @@ body {
   <hr>
   <br>
   {% endfor %}
+  <script>
+    function hrefPropView(e){
+      location = $(e).attr('data-my');
+      console.log(location);
+    }
+  </script>
 
   <!-- <div class="items">
     <div class="row">
