@@ -281,7 +281,7 @@ body {
     margin: 0;
   }
   .lp-listing{
-    padding: 5px 16px;
+    padding: 5px 8px;
   }
   .items{
     background-color: white;
@@ -291,9 +291,19 @@ body {
     color: black;
   }
   .lp-listing .row img{
-  max-width: 40%;
+  max-width: 20%;
   width: auto;
   height: auto;
+}
+.lp-listing p{
+  font-size: 12px;
+}
+.items{
+  padding: 16px;
+  background-color: #fff2f2;
+}
+.row .mt-1{
+  justify-content: center;
 }
 @media screen and (max-width: 700px) {
   .lp-listing .row img{
@@ -303,10 +313,10 @@ body {
 </style>
 
 <div class="container-fluid url-location">
-  <p style="color: #b2a3a3; font-size: 13px;margin-bottom: 0;">Home/Lucknow/Gomti Nagar.</p>
-  <!-- <br> -->
+  <p style="color: #b2a3a3; font-size: 13px;margin-bottom: 0;">{{location}}.</p>
+  <br>
   <p style="color: #b2a3a3; font-size: 13px;">Last Updated on 16 June.</p>
-  <h6>600 Flats for Rent in Gomti Nagar</h6>
+  <h6>{{total_props}} {{type}} for Rent in {{place}}</h6>
 </div>
 
 <div class="container-fluid lp-listing" id="lp-listing">
@@ -327,8 +337,8 @@ body {
     <!-- <div class="desc mt-1">
       <p style="font-size: 12px;color: #6e6c6c;">asdas dasdsad sa dsa da.</p>
     </div> -->
-    <div class="row mt-1">
-      <p style="font-size: 10px;" class="col-12">{{i.desc}}</p>
+    <div class="row mt-1" style="justify-content: center;">
+      <p style="" class="col-12">{{i.desc}}</p>
       <!-- <img style="height: 70%;padding: 0;" class="col-3" src="{% static 'images/bg-2.jpg' %}" alt="">
       <div class="lord-details col-4" style="padding-right: 0;">
         <h6 style="font-size: 11px;" class="name">Abhishek Singh</h6>
@@ -348,9 +358,9 @@ body {
       </div>
     </div>
   </div>
-  <br>
+  <!-- <br> -->
   <hr>
-  <br>
+  <!-- <br> -->
   {% endfor %}
   <script>
     function hrefPropView(e){

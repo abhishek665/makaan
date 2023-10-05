@@ -31,12 +31,14 @@ def list_properties(request):
         data = ''
         place = inc_data['place']
         price = inc_data['price']
+        city = inc_data['city']
         if inc_data['what'].lower() == 'plots':
             area = inc_data['area']
             data = Property.objects.filter(address__icontains=place.lower(), type='plots', area__lte=int(area),
                                            price__lte=int(price))
             images = PropertyImage.objects.filter(ref__in=[x for x in data])
-            return render(request, 'list-property.html', {'data': zip(data, images)})
+            return render(request, 'list-property.html', {'data': zip(data, images), 'total_props': len(data
+                                                ), 'location': f'home/{city}/{place}', 'type': 'Plots', 'place': place})
         elif inc_data['what'].lower() == 'houses':
             area = inc_data['area']
             data = Property.objects.filter(address__icontains=place.lower(), type='houses', area__lte=int(area),
@@ -44,7 +46,8 @@ def list_properties(request):
             images = PropertyImage.objects.filter(ref__in=[x for x in data])
             print(images, data, zip(data, images))
             print(data)
-            return render(request, 'list-property.html', {'data': zip(data, images)})
+            return render(request, 'list-property.html', {'data': zip(data, images), 'total_props': len(data),
+                                                          'location': f'home/{city}/{place}', 'type': 'Houses', 'place': place})
     return render(request, 'list-property.html')
 
 

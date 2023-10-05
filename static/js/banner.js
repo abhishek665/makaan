@@ -91,11 +91,12 @@ function submitListPropertyForm(e){
     what = document.getElementById('check-property-type').value;
     want = document.getElementById('check-type-select').value;
     full_place = document.getElementById('search').value;
+    city = document.getElementById('h-city').value;
     place = full_place.split(',')[0]
     document.getElementById('price').value = budget;
     document.getElementById('area').value = built;
     filter = {price: budget, area: built, bhk: JSON.parse(document.getElementById('bhk').value),
-              area: built, what: what, want: want, place: place, full_place: full_place};
+              area: built, what: what, want: want, place: place, full_place: full_place, city: city};
     localStorage.setItem('filter', JSON.stringify(filter));
     // $('#search-form').submit();
     filterSubmitForm(JSON.stringify(filter));
