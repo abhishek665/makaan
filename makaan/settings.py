@@ -127,6 +127,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CSRF_COOKIE_AGE = 86400  # 1 day
+
 import os
 
 # Static files (CSS, JavaScript, Images)
