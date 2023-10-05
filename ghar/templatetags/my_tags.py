@@ -10,5 +10,17 @@ def divide(value, divisor):
     except (ValueError, ZeroDivisionError):
         return 0.0
 
+
+@register.filter
+def price_convertor(value):
+    price = str(value)
+    if len(price) == 7:
+        np = price[:2]
+        price = np + ' Lakhs'
+        return price
+    if len(price) == 8:
+        np = price[:2]
+        price = np + ' Cr.'
+        return price
 # def abcde():
 #     pass
